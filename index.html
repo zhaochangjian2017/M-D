@@ -990,6 +990,9 @@ body {
     <div class="week-tag">第35周</div>
     <div>2026.08.24 - 08.28</div>
     <div style="margin-top:4px;">模拟数据 · 原型演示</div>
+    <div style="margin-top:6px;padding-top:6px;border-top:1px solid var(--border);font-size:11px;color:var(--text-muted);">
+      <span style="display:inline-block;padding:2px 6px;background:var(--bg-tertiary);border-radius:4px;font-family:monospace;" id="app-version">v1.0.0</span>
+    </div>
   </div>
 </aside>
 
@@ -1557,6 +1560,8 @@ body {
 <script>
 // ===== 模拟数据 =====
 const state = {
+  version: 'v1.0.0',
+  versionDate: '2026-08-30',
   currentRoute: 'dashboard',
   currentTab: {},
   goldPool: [
@@ -2781,8 +2786,24 @@ function toggleChecklist(id) {
   }
 }
 
+// ===== 版本管理 =====
+// 版本号规则：主版本.次版本.修订号
+// 主版本：重大架构重构或功能模块新增
+// 次版本：新增功能模块或重大功能改进
+// 修订号：Bug修复、样式调整、数据更新等小改动
+// 每次修改后自动增加修订号，并同步推送到 GitHub
+// 当前版本：v1.0.0（2026-08-30 首个正式版本，包含8大功能模块）
+function updateVersionDisplay() {
+  const versionEl = document.getElementById('app-version');
+  if (versionEl) {
+    versionEl.textContent = state.version;
+    versionEl.title = `版本 ${state.version} · 发布于 ${state.versionDate}`;
+  }
+}
+
 // ===== 初始化 =====
 document.querySelectorAll('.view').forEach(v => initTabs(v));
+updateVersionDisplay();
 // handleHashChange 已在路由部分调用，会根据初始 hash 渲染对应视图
 </script>
 </body>
